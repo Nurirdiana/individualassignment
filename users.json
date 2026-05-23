@@ -1,0 +1,20 @@
+[
+    {
+        "id": 2,
+        "fullname": "irdiana",
+        "username": "ana",
+        "email": "irdiana26@gmail.com",
+        "password": "$2y$10$XabRNbsw\/1l8YuulFDH8SO9hW9kzNMAcTTACXR9FygHF6XjDrJreO",
+        "member_since": "16 May 2026",
+        "created_at": "2026-05-16 21:18:10"
+    },
+    {
+        "id": 2,
+        "fullname": "Admin",
+        "username": "admin",
+        "email": "admin26@gmail.com",
+        "password": "$2y$10$NLqx8uLOCKgfFT5rf\/ci..Mf9iwaArnz8pr3WigCSVmf47kYc8poe",
+        "member_since": "16 May 2026",
+        "created_at": "2026-05-16 21:23:39"
+    }
+]

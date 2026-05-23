@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Assignments - AssignTrack</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      height: 100vh;
+      background: #111827;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding: 25px 20px;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .logo {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .logo h2 {
+      color: #8b5cf6;
+      font-size: 24px;
+    }
+
+    .logo a {
+      text-decoration: none;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      color: #cbd5e1;
+      text-decoration: none;
+      padding: 12px 15px;
+      display: block;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 12px;
+      width: 20px;
+    }
+
+    /* Main Content */
+    .main-wrapper {
+      margin-left: 260px;
+      min-height: 100vh;
+    }
+
+    .main {
+      padding: 25px 35px;
+    }
+
+    .top-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .search-container {
+      flex: 1;
+      max-width: 400px;
+      display: flex;
+      gap: 10px;
+    }
+    .search-box {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      background: #1e293b;
+      border: none;
+      color: white;
+    }
+    .search-box::placeholder {
+      color: #94a3b8;
+    }
+    .search-type {
+      background: #334155;
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-add {
+      background: #8b5cf6;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    .btn-add:hover { background: #7c3aed; transform: scale(1.02); }
+    
+    .assignment-item {
+      background: #1e293b;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      transition: 0.3s;
+      border-left: 5px solid;
+    }
+    
+    .assignment-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .btn-edit {
+      background: #f59e0b;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0 5px;
+      transition: 0.2s;
+    }
+    .btn-edit:hover { background: #d97706; }
+    
+    .btn-delete {
+      background: #ef4444;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0 5px;
+      transition: 0.2s;
+    }
+    .btn-delete:hover { background: #dc2626; }
+    
+    .btn-status {
+      background: #334155;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 20px;
+      width: 450px;
+      max-width: 90%;
+    }
+    .modal-content input, .modal-content select, .modal-content textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      background: #334155;
+      color: white;
+      border: none;
+    }
+    .modal-content label {
+      display: block;
+      margin-top: 10px;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .modal-buttons button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 50px;
+      color: #94a3b8;
+    }
+    .subject-badge {
+      display: inline-block;
+      background: #8b5cf6;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .search-hint {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 5px;
+    }
+
+    .page-description {
+      color: #cbd5e1;
+      max-width: 760px;
+      line-height: 1.7;
+      margin: 10px 0 20px;
+    }
+
+    .info-box {
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      border-radius: 14px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      max-width: 820px;
+    }
+
+    .info-box strong {
+      color: #8b5cf6;
+    }
+
+    .main-footer {
+      margin-top: 35px;
+      padding: 30px 30px 20px;
+      background: #1e293b;
+      border-radius: 20px;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      width: 100%;
+    }
+
+    .footer-container {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .footer-brand h3,
+    .footer-links h4,
+    .footer-contact h4 {
+      margin-bottom: 14px;
+      color: #f8fafc;
+    }
+
+    .footer-brand p,
+    .footer-contact p,
+    .footer-links a {
+      color: #cbd5e1;
+      line-height: 1.7;
+      text-decoration: none;
+      display: block;
+    }
+
+    .footer-links a {
+      margin-bottom: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #8b5cf6;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .main-footer hr {
+      border: none;
+      border-top: 1px solid #334155;
+      margin: 20px 0;
+    }
+
+    .social-icons a {
+      color: #cbd5e1;
+      margin-left: 12px;
+      transition: color 0.2s ease;
+    }
+
+    .social-icons a:hover {
+      color: #8b5cf6;
+    }
+
+    .footer-links a i,
+    .footer-contact p i {
+      width: 18px;
+      text-align: center;
+      margin-right: 8px;
+      color: #8b5cf6;
+    }
+
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 70px;
+        padding: 15px 10px;
+      }
+      .sidebar .logo h2 {
+        font-size: 10px;
+      }
+      .sidebar ul li a span {
+        display: none;
+      }
+      .sidebar ul li a i {
+        margin-right: 0;
+        font-size: 18px;
+      }
+      .main-wrapper {
+        margin-left: 70px;
+      }
+      .main {
+        padding: 15px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .assignment-item {
+        flex-direction: column;
+        text-align: center;
+      }
+      .top-section {
+        flex-direction: column;
+      }
+      .search-container {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app-wrapper">
+  <div class="sidebar">
+    <div class="logo">
+      <a href="dashboard.html" style="text-decoration: none;">
+          <h2>AssignTrack</h2>
+      </a>
+    </div>
+  <ul>
+    <li><a href="dashboard.html"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+    <li><a href="assignments.html" class="active"><i class="fas fa-book"></i> <span>Assignments</span></a></li>
+    <li><a href="calendar.html"><i class="fas fa-calendar-alt"></i> <span>Calendar</span></a></li>
+    <li><a href="subjects.html"><i class="fas fa-layer-group"></i> <span>Subjects</span></a></li>
+    <li><a href="statistics.html"><i class="fas fa-chart-line"></i> <span>Statistics</span></a></li>
+    <li><a href="settings.html"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+  </ul>
+</div>
+
+  <div class="main-wrapper">
+    <div class="main">
+      <h1>📋 Assignments</h1>
+  <p class="page-description">Track your tasks with subject, due date, and priority. Use search to find assignments quickly and mark progress as you work.</p>
+  <div class="info-box">
+    <strong>Quick guide:</strong> Search by title or subject code. Click "Add New Assignment" to create a task, then use the status dropdown to mark it complete.
+  </div>
+  <div class="top-section">
+    <div class="search-container">
+      <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search by title or subject...">
+      <select id="searchType" class="search-type">
+        <option value="both">🔄 Search Both</option>
+        <option value="title">📝 Search by Title</option>
+        <option value="subject">📚 Search by Subject</option>
+      </select>
+    </div>
+    <button class="btn-add" onclick="openAddModal()">
+      <i class="fas fa-plus"></i> + Add New Assignment
+    </button>
+  </div>
+  <div class="search-hint" id="searchHint">
+    💡 Tip: Search by subject code (e.g., CSC264) to find all assignments for that subject
+  </div>
+  
+  <div id="assignmentsList"></div>
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-tasks"></i> AssignTrack</h3>
+                    <p>Smart Assignment Tracker for Students</p>
+                    <p style="margin-top: 10px;">Track your assignments, stay organized, and never miss a deadline.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="dashboard.html"><i class="fas fa-chevron-right"></i> Dashboard</a>
+                    <a href="assignments.html"><i class="fas fa-chevron-right"></i> Assignments</a>
+                    <a href="calendar.html"><i class="fas fa-chevron-right"></i> Calendar</a>
+                    <a href="subjects.html"><i class="fas fa-chevron-right"></i> Subjects</a>
+                    <a href="statistics.html"><i class="fas fa-chevron-right"></i> Statistics</a>
+                    <a href="settings.html"><i class="fas fa-chevron-right"></i> Settings</a>
+                </div>
+                <!-- Support -->
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <a href="support.html#faq">FAQ</a>
+                    <a href="support.html#help-center">Help Center</a>
+                    <a href="support.html#privacy-policy">Privacy Policy</a>
+                    <a href="support.html#terms-of-use">Terms of Use</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-envelope"></i> support@assigntrack.com</p>
+                    <p><i class="fas fa-phone"></i> +60 12-345 6789</p>
+                    <p><i class="fas fa-globe"></i> www.assigntrack.com</p>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AssignTrack | Assignment Tracker for Students | All Rights Reserved</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Add Assignment -->
+<div id="addModal" class="modal">
+  <div class="modal-content">
+    <h3><i class="fas fa-plus-circle"></i> Add New Assignment</h3>
+    
+    <label>Assignment Title:</label>
+    <input type="text" id="newTitle" placeholder="e.g., Web Development Project">
+    
+    <label>Subject:</label>
+    <select id="newSubject">
+      <option value="">-- Select Subject --</option>
+    </select>
+    
+    <label>Due Date:</label>
+    <input type="date" id="newDueDate">
+    
+    <label>Priority:</label>
+    <select id="newPriority">
+      <option value="high">🔥 High Priority</option>
+      <option value="mid">⚠️ Medium Priority</option>
+      <option value="low">✅ Low Priority</option>
+    </select>
+    
+    <label>Description (optional):</label>
+    <textarea id="newDescription" rows="3" placeholder="Additional details..."></textarea>
+    
+    <div class="modal-buttons">
+      <button onclick="saveAssignment()" style="background:#10b981; color:white;">✅ Save</button>
+      <button onclick="closeAddModal()" style="background:#ef4444; color:white;">❌ Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================
+  // REPLACEMENT FOR PHP SESSION CHECK
+  // ============================================
+  // Check if user is logged in
+  const userId = localStorage.getItem('user_id');
+  if (!userId) {
+    window.location.href = 'index.html';
+  }
+
+  // ============ DATA ============
+  let assignments = JSON.parse(localStorage.getItem('assignments')) || [];
+  let subjects = JSON.parse(localStorage.getItem('subjects')) || [
+    { code: "CSC264", name: "Web Development" },
+    { code: "CSC248", name: "Database" },
+    { code: "CSC318", name: "UI/UX Design" },
+    { code: "CSC260", name: "Networking" }
+  ];
+
+  // Save default subjects if empty
+  if (localStorage.getItem('subjects') === null) {
+      localStorage.setItem('subjects', JSON.stringify(subjects));
+  }
+
+  function saveAssignments() {
+    localStorage.setItem('assignments', JSON.stringify(assignments));
+    // Trigger update for other pages
+    window.dispatchEvent(new StorageEvent('storage', { key: 'assignments', newValue: JSON.stringify(assignments) }));
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return 'No date';
+    let options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  }
+
+  function getDaysLeft(dueDate) {
+    if (!dueDate) return '?';
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let due = new Date(dueDate);
+    let diffTime = due - today;
+    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }
+
+  function getPriorityColor(priority) {
+    switch(priority) {
+      case 'high': return '#ef4444';
+      case 'mid': return '#f59e0b';
+      case 'low': return '#10b981';
+      default: return '#8b5cf6';
+    }
+  }
+
+  function loadSubjectsToDropdown() {
+    let select = document.getElementById('newSubject');
+    if (subjects.length === 0) {
+      select.innerHTML = '<option value="">No subjects yet. Add subjects in Subjects page first!</option>';
+      return;
+    }
+    
+    let html = '';
+    subjects.forEach(subj => {
+      html += `<option value="${subj.code}">${subj.code} - ${subj.name}</option>`;
+    });
+    select.innerHTML = html;
+  }
+
+  function renderAssignments() {
+    let searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    let searchType = document.getElementById('searchType').value;
+    
+    let filtered = assignments.filter(a => {
+      if (!searchTerm) return true;
+      
+      if (searchType === 'title') {
+        return a.title.toLowerCase().includes(searchTerm);
+      } 
+      else if (searchType === 'subject') {
+        return a.subject.toLowerCase().includes(searchTerm);
+      } 
+      else {
+        return a.title.toLowerCase().includes(searchTerm) || 
+               a.subject.toLowerCase().includes(searchTerm);
+      }
+    });
+    
+    let hintText = '';
+    if (searchType === 'title') hintText = '🔍 Searching by TITLE only';
+    else if (searchType === 'subject') hintText = '📚 Searching by SUBJECT';
+    else hintText = '🔄 Searching by BOTH title and subject';
+    document.getElementById('searchHint').innerHTML = `💡 ${hintText} | Found ${filtered.length} assignment(s)`;
+    
+    filtered.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate));
+    
+    if (filtered.length === 0) {
+      document.getElementById('assignmentsList').innerHTML = '<div class="empty-state"><i class="fas fa-book" style="font-size:48px;"></i><p>No assignments found. Click "+ Add New Assignment" to create one!</p></div>';
+      return;
+    }
+    
+    let html = '';
+    filtered.forEach(a => {
+      let daysLeft = getDaysLeft(a.dueDate);
+      let priorityIcon = a.priority === 'high' ? '🔥' : (a.priority === 'mid' ? '⚠️' : '✅');
+      let priorityColor = getPriorityColor(a.priority);
+      let statusColor = a.status === 'pending' ? '#f59e0b' : '#10b981';
+      let daysLeftColor = daysLeft <= 2 ? '#ef4444' : (daysLeft <= 5 ? '#f59e0b' : '#10b981');
+      
+      html += `
+        <div class="assignment-item" style="border-left-color: ${priorityColor};">
+          <div style="flex:1;">
+            <h3>${escapeHtml(a.title)}</h3>
+            <span class="subject-badge">📚 ${a.subject}</span>
+            <p style="margin-top: 8px;">
+              📅 Due: ${formatDate(a.dueDate)} | 
+              ⏰ <span style="color: ${daysLeftColor}; font-weight: bold;">${daysLeft} days left</span>
+            </p>
+            <p>${priorityIcon} Priority: <span style="color: ${priorityColor};">${a.priority.toUpperCase()}</span></p>
+            ${a.description ? `<small><i class="fas fa-align-left"></i> ${escapeHtml(a.description)}</small>` : ''}
+          </div>
+          <div>
+            <select onchange="updateStatus(${a.id}, this.value)" class="btn-status" style="background:${statusColor};">
+              <option value="pending" ${a.status === 'pending' ? 'selected' : ''}>⏳ Pending</option>
+              <option value="completed" ${a.status === 'completed' ? 'selected' : ''}>✓ Completed</option>
+            </select>
+            <button class="btn-edit" onclick="editAssignment(${a.id})"><i class="fas fa-edit"></i> Edit</button>
+            <button class="btn-delete" onclick="deleteAssignment(${a.id})"><i class="fas fa-trash-alt"></i> Delete</button>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById('assignmentsList').innerHTML = html;
+  }
+
+  // Helper function to escape HTML
+  function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function openAddModal() {
+    loadSubjectsToDropdown();
+    document.getElementById('addModal').style.display = 'flex';
+  }
+
+  function closeAddModal() {
+    document.getElementById('addModal').style.display = 'none';
+    // Clear form
+    document.getElementById('newTitle').value = '';
+    document.getElementById('newDueDate').value = '';
+    document.getElementById('newDescription').value = '';
+  }
+
+  function saveAssignment() {
+    let title = document.getElementById('newTitle').value;
+    let subject = document.getElementById('newSubject').value;
+    let dueDate = document.getElementById('newDueDate').value;
+    let priority = document.getElementById('newPriority').value;
+    let description = document.getElementById('newDescription').value;
+    
+    if (!title) {
+      alert('Please enter assignment title!');
+      return;
+    }
+    if (!subject) {
+      alert('Please select a subject!');
+      return;
+    }
+    if (!dueDate) {
+      alert('Please select due date!');
+      return;
+    }
+    
+    let newId = Date.now();
+    assignments.push({
+      id: newId,
+      title: title,
+      subject: subject,
+      dueDate: dueDate,
+      priority: priority,
+      status: 'pending',
+      description: description
+    });
+    
+    saveAssignments();
+    closeAddModal();
+    
+    renderAssignments();
+    
+    alert(`✅ Assignment "${title}" added to ${subject}!`);
+  }
+
+  function updateStatus(id, newStatus) {
+    let assignment = assignments.find(a => a.id === id);
+    if (assignment) {
+      assignment.status = newStatus;
+      saveAssignments();
+      renderAssignments();
+    }
+  }
+
+  function editAssignment(id) {
+    let assignment = assignments.find(a => a.id === id);
+    if (!assignment) return;
+    
+    let newTitle = prompt('Edit title:', assignment.title);
+    if (newTitle && newTitle.trim()) assignment.title = newTitle;
+    
+    let newDueDate = prompt('Edit due date (YYYY-MM-DD):', assignment.dueDate);
+    if (newDueDate) assignment.dueDate = newDueDate;
+    
+    let newPriority = prompt('Edit priority (high/mid/low):', assignment.priority);
+    if (newPriority && ['high', 'mid', 'low'].includes(newPriority)) assignment.priority = newPriority;
+    
+    saveAssignments();
+    renderAssignments();
+    alert('✅ Assignment updated!');
+  }
+
+  function deleteAssignment(id) {
+    if (confirm('Are you sure you want to delete this assignment?')) {
+      assignments = assignments.filter(a => a.id !== id);
+      saveAssignments();
+      renderAssignments();
+      alert('✅ Assignment deleted!');
+    }
+  }
+
+  // Event listeners
+  document.getElementById('searchInput').addEventListener('input', renderAssignments);
+  document.getElementById('searchType').addEventListener('change', () => {
+    renderAssignments();
+    document.getElementById('searchInput').focus();
+  });
+
+  // Listen for changes from other pages
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'subjects') {
+      subjects = JSON.parse(e.newValue) || [];
+    }
+    if (e.key === 'assignments') {
+      assignments = JSON.parse(e.newValue) || [];
+      renderAssignments();
+    }
+  });
+
+  // Initialize
+  renderAssignments();
+</script>
+
+</body>
+</html>

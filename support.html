@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - FAQ & Help</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header-support {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header-support h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header-support p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Navigation Tabs */
+        .nav-support {
+            background: white;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .nav-support a {
+            background: #f0f2f5;
+            color: #007bff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-support a:hover {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Card for each section */
+        .support-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            scroll-margin-top: 80px;
+        }
+
+        .support-card h2 {
+            color: #007bff;
+            border-left: 5px solid #007bff;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .support-card h3 {
+            color: #333;
+            margin: 20px 0 10px 0;
+        }
+
+        /* FAQ Items */
+        .faq-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .question {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question:hover {
+            color: #007bff;
+        }
+
+        .question .toggle-icon {
+            font-size: 1.2rem;
+            color: #007bff;
+        }
+
+        .answer {
+            color: #555;
+            padding-left: 10px;
+            border-left: 3px solid #007bff;
+            margin-top: 8px;
+            display: block;
+        }
+
+        /* Help Center Topics - Simple */
+        .topic-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .topic-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .topic-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .topic-item h3 {
+            color: #007bff;
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .topic-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Box */
+        .contact-box {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .contact-box a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        /* Back Button */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #0056b3;
+            transform: translateX(-5px);
+        }
+
+        /* Footer */
+        .footer-support {
+            text-align: center;
+            padding: 30px;
+            background: #2c3e50;
+            color: white;
+            margin-top: 40px;
+        }
+
+        .footer-support a {
+            color: #ffc107;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-support h1 {
+                font-size: 1.8rem;
+            }
+            .support-card {
+                padding: 20px;
+            }
+            .nav-support a {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header-support">
+    <h1>📞 Support Center</h1>
+    <p>We are here to help you</p>
+</div>
+
+<div class="container">
+    <!-- Navigation Anchor Links -->
+    <div class="nav-support">
+        <a href="#faq">❓ FAQ</a>
+        <a href="#help-center">🎯 Help Center</a>
+        <a href="#privacy-policy">🔒 Privacy Policy</a>
+        <a href="#terms-of-use">⚖️ Terms of Use</a>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SECTION 1: FAQ -->
+    <!-- ============================================ -->
+    <div id="faq" class="support-card">
+        <h2>❓ Frequently Asked Questions (FAQ)</h2>
+        
+        <div class="faq-item">
+            <div class="question">
+                How do I register an account?
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="answer">
+                Click the "Register" button on the homepage, fill in your details such as name, email, and password. After that, verify your email via the link sent.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">
+                Is this service free?
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="answer">
+                Yes, the basic service is FREE. We also offer premium plans with additional features at affordable prices.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">
+                How do I reset my password?
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="answer">
+                On the login page, click "Forgot Password". Enter your email and we will send a password reset link to that email.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">
+                How long does it take to get a response?
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="answer">
+                We will respond within 24 hours on business days. For emergencies, please contact our hotline.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">
+                Can I cancel my subscription?
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="answer">
+                Yes, you can cancel your subscription at any time via Account Settings > Subscription.
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2: HELP CENTER (DIRECT DISPLAY ONLY) -->
+    <!-- ============================================ -->
+    <div id="help-center" class="support-card">
+        <h2>🎯 Help Center</h2>
+        
+        <div class="topic-list">
+            <div class="topic-item">
+                <h3>🔧 How to Use the Website</h3>
+                <p>Complete guide to navigation, registration, and using all features.</p>
+            </div>
+            <div class="topic-item">
+                <h3>💳 Payment Issues</h3>
+                <p>Guide to resolving credit card, online banking, and e-wallet issues.</p>
+            </div>
+            <div class="topic-item">
+                <h3>📱 Mobile App</h3>
+                <p>Download for Android/iOS and app usage guide.</p>
+            </div>
+            <div class="topic-item">
+                <h3>🔐 Account Security</h3>
+                <p>Tips to protect your account from cybersecurity threats.</p>
+            </div>
+            <div class="topic-item">
+                <h3>📧 Email Verification Problems</h3>
+                <p>If you don't receive a verification email, check your spam folder or request again.</p>
+            </div>
+            <div class="topic-item">
+                <h3>🔄 Backup & Restore Data</h3>
+                <p>How to backup and restore your data.</p>
+            </div>
+            <div class="topic-item">
+                <h3>🔑 Forgot Password</h3>
+                <p>Steps to reset a forgotten password.</p>
+            </div>
+            <div class="topic-item">
+                <h3>✏️ Update Profile</h3>
+                <p>How to change personal information and profile picture.</p>
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <strong>📞 Can't find the answer you're looking for?</strong><br>
+            Contact our support team:<br>
+            📧 <a href="mailto:support@domainanda.com">support@domainanda.com</a><br>
+            📱 +603-1234 5678 (Monday-Friday, 9am-6pm)
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3: PRIVACY POLICY -->
+    <!-- ============================================ -->
+    <div id="privacy-policy" class="support-card">
+        <h2>🔒 Privacy Policy</h2>
+        <p><strong>Effective date:</strong> January 1, 2026</p>
+        
+        <h3>1. Information Collected</h3>
+        <p>We collect information such as name, email address, phone number, and usage data when you use our services.</p>
+        
+        <h3>2. How Information Is Used</h3>
+        <p>Your information is used to:</p>
+        <ul>
+            <li>Provide and maintain the service</li>
+            <li>Send important notifications and updates</li>
+            <li>Improve user experience</li>
+            <li>Resolve technical issues</li>
+        </ul>
+        
+        <h3>3. Data Protection</h3>
+        <p>We take appropriate security measures including data encryption and firewalls to protect your personal information.</p>
+        
+        <h3>4. Information Sharing</h3>
+        <p>We DO NOT sell or rent your personal information to third parties. Information is only shared with trusted service providers for operational purposes.</p>
+        
+        <h3>5. Your Rights</h3>
+        <p>You have the right to:</p>
+        <ul>
+            <li>Request a copy of your information</li>
+            <li>Delete your data</li>
+            <li>Correct inaccurate information</li>
+        </ul>
+        
+        <h3>6. Contact Us</h3>
+        <p>If you have any questions about this privacy policy, email us at <a href="mailto:privacy@domainanda.com">privacy@domainanda.com</a></p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4: TERMS OF USE -->
+    <!-- ============================================ -->
+    <div id="terms-of-use" class="support-card">
+        <h2>⚖️ Terms of Use</h2>
+        <p><strong>Effective date:</strong> January 1, 2026</p>
+        
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing or using this website, you acknowledge that you have read, understood, and agree to be bound by these terms of use.</p>
+        
+        <h3>2. Changes to Terms</h3>
+        <p>We reserve the right to modify these terms at any time. Updated terms will be displayed on this page with a new effective date.</p>
+        
+        <h3>3. Account Registration</h3>
+        <p>You are responsible for maintaining the confidentiality of your password and for all activities that occur under your account.</p>
+        
+        <h3>4. Permitted Use</h3>
+        <p>You agree NOT to:</p>
+        <ul>
+            <li>Misuse our services</li>
+            <li>Interfere with other users</li>
+            <li>Send unlawful content</li>
+            <li>Attempt to access other users' accounts without permission</li>
+        </ul>
+        
+        <h3>5. Account Termination</h3>
+        <p>We reserve the right to terminate or suspend your account if these terms are violated, without prior notice.</p>
+        
+        <h3>6. Limitation of Liability</h3>
+        <p>We are not liable for any direct, indirect, or consequential losses arising from the use or inability to use our services.</p>
+        
+        <h3>7. Governing Law</h3>
+        <p>These terms are governed by the laws of Malaysia. Any disputes will be resolved in Malaysian courts.</p>
+        
+        <h3>8. Contact Us</h3>
+        <p>For any questions about these terms, please contact us at <a href="mailto:legal@domainanda.com">legal@domainanda.com</a></p>
+    </div>
+
+    <!-- Back to Homepage Button -->
+    <div style="text-align: center;">
+        <a href="dashboard.html" class="back-link">
+            ← Back to Home
+        </a>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer-support">
+    <p>&copy; 2026 Your Company Name. All rights reserved.</p>
+    <p>Need help? <a href="#faq">Click here</a></p>
+</div>
+
+<!-- JavaScript for FAQ Toggle -->
+<script>
+    // Function to toggle FAQ answers
+    document.querySelectorAll('.faq-item .question').forEach(item => {
+        item.addEventListener('click', () => {
+            const answer = item.nextElementSibling;
+            const icon = item.querySelector('.toggle-icon');
+            
+            if (answer.style.display === 'none' || !answer.style.display) {
+                answer.style.display = 'block';
+                icon.textContent = '▲';
+            } else {
+                answer.style.display = 'none';
+                icon.textContent = '▼';
+            }
+        });
+    });
+
+    // Set all answers default to 'block' (open)
+    document.querySelectorAll('.faq-item .answer').forEach(answer => {
+        answer.style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
